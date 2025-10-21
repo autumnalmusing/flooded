@@ -47,12 +47,12 @@ clean:
 #
 # install
 #
-install: flooded man/wideriver.1
+install: flooded man/flooded.1
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp -f flooded $(DESTDIR)$(PREFIX)/bin
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/flooded
 	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1
-	cp -f man/wideriver.1 $(DESTDIR)$(PREFIX)/share/man/man1/flooded.1
+	cp -f man/flooded.1 $(DESTDIR)$(PREFIX)/share/man/man1
 	chmod 644 $(DESTDIR)$(PREFIX)/share/man/man1/flooded.1
 
 uninstall:
