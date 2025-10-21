@@ -37,7 +37,7 @@
           export VERSION="0.1.0"
           export RIVER_LAYOUT_V3_VERSION=2
           export INCS="-Iinc -Ipro -Ilib/col/inc"
-          export CPPFLAGS="$INCS -D_GNU_SOURCE -DVERSION=\"$VERSION\" -DRIVER_LAYOUT_V3_VERSION=$RIVER_LAYOUT_V3_VERSION"
+          export CPPFLAGS="$INCS -D_GNU_SOURCE -DVERSION=\"0.1.0\" -DRIVER_LAYOUT_V3_VERSION=$RIVER_LAYOUT_V3_VERSION"
           export CFLAGS="-O3 -pedantic -Wall -Wextra -Werror -Wimplicit-fallthrough -Wno-unused-parameter -Wno-format-zero-length -g -std=gnu17 -Wold-style-definition -Wstrict-prototypes"
           export CC=gcc
         '';

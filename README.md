@@ -9,15 +9,16 @@ Fork of the [wideriver](https://github.com/alex-courtis/wideriver) tiling window
 - Dwindling, diminishing and even stacks
 - Inner, outer and smart gaps
 
-| Layout  | Symbol    | Master | Stack  | Directions  |
-|---------|-----------|--------|--------|-------------|
-| Left    | `│ ├─┤`   | Left   | Right  | Down, Right |
-| Right   | `├─┤ │`   | Right  | Left   | Down, Left  |
-| Top     | `├─┬─┤`   | Top    | Bottom | Right, Down |
-| Bottom  | `├─┴─┤`   | Bottom | Top    | Right, Up   |
-| Wide    | `├─┤ ├─┤` | Mid    | Left   | Up, Left    |
-|         |           |        | Right  | Down, Right |
-| Monocle | `│ n │`   | All    | \-     | \-          |
+| Layout       | Symbol    | Master | Stack  | Directions  |
+|--------------|-----------|--------|--------|-------------|
+| Left         | `│ ├─┤`   | Left   | Right  | Down, Right |
+| Right        | `├─┤ │`   | Right  | Left   | Down, Left  |
+| Top          | `├─┬─┤`   | Top    | Bottom | Right, Down |
+| Bottom       | `├─┴─┤`   | Bottom | Top    | Right, Up   |
+| Wide         | `├─┤ ├─┤` | Mid    | Left   | Up, Left    |
+|              |           |        | Right  | Down, Right |
+| Split Scroll | `| | | |` | All    | \-     | \-          |
+| Monocle      | `│ n │`   | All    | \-     | \-          |
 
 <!-- toc -->
 
@@ -283,6 +284,12 @@ Only one view is focused, occupying all of the available space.
 
 `│ n │` with `n` showing number of views only when greater than 1.
 
+### Split Scroll
+
+A new layout that supports multiple independently "scrollable" columns. 
+
+`| | | |` - The layout symbol shows the columnar structure with independent scrollable areas.
+
 ## STACK ARRANGEMENTS
 
 3 arrangements are available for the stack area. It is persisted per tag and applied to all layouts for that tag. See above for an example of each arrangement.
@@ -346,6 +353,20 @@ Gaps, in pixels, between windows may be injected. They are off by default.
 ### Package Manager
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/flooded.svg)](https://repology.org/project/flooded/versions)
+
+### NixOS
+
+Flooded is available as a NixOS package and can be installed via flake:
+
+```nix
+# In your flake.nix inputs
+inputs.flooded.url = "github:autumnalmusing/flooded/testing";
+
+# In your home-manager configuration
+home.packages = with pkgs; [
+  inputs.flooded.packages.${pkgs.system}.flooded
+];
+```
 
 ### From Source
 
@@ -476,6 +497,44 @@ Increment, decrement or set the master count, minimum `0`. For wide layout this 
 
 `--ratio` \[`+-`\]*pixels*  
 Increase, decrease or set the master ratio: the proportion of the width or height the master area occupies, minimum `0.1`, maximum `0.9`. Discrete tiling and wide values persisted per tag. Prefix with `+` to increase, `-` to decrease, or an absolute value.
+
+## NEW COMMANDS
+
+Flooded introduces additional commands for enhanced window management:
+
+### Split Scroll Layout Commands
+
+- `--layout split_scroll` - Switch to the new split scroll layout
+- `--layout-toggle` - Toggle between current layout and split scroll layout
+- `--add-column` - Add a new column to the split scroll layout
+- `--next-column` - Move focus to the next column
+- `--prev-column` - Move focus to the previous column
+
+```sh
+# Use flooded for split scroll functionality
+riverctl send-layout-cmd flooded "--layout split_scroll"
+
+# Use wideriver for traditional layouts  
+riverctl send-layout-cmd wideriver "--layout left"
+```
+
+### Column Navigation Key Bindings
+
+You can set up key bindings for column navigation in your river configuration:
+
+```sh
+# Column navigation
+riverctl map normal $mod1 h     send-layout-cmd flooded "--prev-column"
+riverctl map normal $mod1 l     send-layout-cmd flooded "--next-column"
+riverctl map normal $mod1 plus  send-layout-cmd flooded "--add-column"
+
+# Example with Super key
+riverctl map normal Super h     send-layout-cmd flooded "--prev-column"
+riverctl map normal Super l     send-layout-cmd flooded "--next-column"
+riverctl map normal Super plus  send-layout-cmd flooded "--add-column"
+```
+
+**Note**: View navigation within columns uses river's built-in commands like `focus-view next` and `focus-view previous`.
 
 ## RECIPES
 
