@@ -1,13 +1,13 @@
 include GNUmakefile
 
-all: README.md man/wideriver.1 CONTRIBUTING.md
+all: README.md man/flooded.1 CONTRIBUTING.md
 	rm doc/help*.out doc/*pandoc.md
 
 doc/help.out:
-	./wideriver --help > $(@)
+	./flooded --help > $(@)
 
 doc/help-defaults.out:
-	./wideriver --help-defaults > $(@)
+	./flooded --help-defaults > $(@)
 
 doc/readme.pandoc.md: doc/help.out doc/help-defaults.out
 	cat doc/templ/*readme*md | sed \
@@ -28,10 +28,10 @@ README.md: doc/readme.pandoc.md
 	pandoc -s --wrap=none --from=markdown --to=gfm --output $(@) doc/readme.pandoc.md
 	markdown-toc --maxdepth=3 -i $(@)
 
-man/wideriver.1: doc/man.pandoc.md
+man/flooded.1: doc/man.pandoc.md
 	pandoc -s --wrap=none --from=markdown --to=man --shift-heading-level-by -1 --output $(@) doc/man.pandoc.md
 
 CONTRIBUTING.md:
 	markdown-toc -i $(@)
 
-.PHONY: all README.md man/wideriver.1 CONTRIBUTING.md
+.PHONY: all README.md man/flooded.1 CONTRIBUTING.md

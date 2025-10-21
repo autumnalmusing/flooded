@@ -8,7 +8,7 @@
 
 void usage(const int status) {
 	fprintf(status == EXIT_SUCCESS ? stdout : stderr,
-			"Usage: wideriver [OPTIONS...|COMMANDS...]\n"
+			"Usage: flooded [OPTIONS...|COMMANDS...]\n"
 			"\n"
 			"OPTIONS, startup:\n"
 			"\n"
@@ -48,9 +48,17 @@ void usage(const int status) {
 			"\n"
 			"  --count                         [+-]count                                         %d <= count\n"
 			"  --ratio                         [+-]ratio                                       %.1g <= ratio <= %.1g\n"
+			"\n"
+			"  --add-column                     Add new column\n"
+			"  --next-column                   Move to next column\n"
+			"  --prev-column                   Move to previous column\n"
+			"\n"
+			"  Note: View navigation within columns uses river's built-in commands:\n"
+			"  - riverctl focus-view next/previous\n"
+			"  - riverctl swap next/previous\n"
 			"\n",
-		layout_name(MONOCLE), layout_name(LEFT), layout_name(RIGHT), layout_name(TOP), layout_name(BOTTOM), layout_name(WIDE), layout_name(LAYOUT_DEFAULT),
-		layout_name(MONOCLE), layout_name(LEFT), layout_name(RIGHT), layout_name(TOP), layout_name(BOTTOM), layout_name(WIDE), layout_name(LAYOUT_ALT_DEFAULT),
+		layout_name(MONOCLE), layout_name(LEFT), layout_name(RIGHT), layout_name(TOP), layout_name(BOTTOM), layout_name(WIDE), layout_name(SPLIT_SCROLL), layout_name(LAYOUT_DEFAULT),
+		layout_name(MONOCLE), layout_name(LEFT), layout_name(RIGHT), layout_name(TOP), layout_name(BOTTOM), layout_name(WIDE), layout_name(SPLIT_SCROLL), layout_name(LAYOUT_ALT_DEFAULT),
 		stack_name(EVEN), stack_name(DIMINISH), stack_name(DWINDLE), stack_name(STACK_DEFAULT),
 		COUNT_MASTER_DEFAULT, COUNT_MIN,
 		RATIO_MASTER_DEFAULT, RATIO_MIN, RATIO_MAX,
@@ -66,7 +74,7 @@ void usage(const int status) {
 		BORDER_COLOR_UNFOCUSED_DEFAULT,
 		log_threshold_name(DEBUG), log_threshold_name(INFO), log_threshold_name(WARNING), log_threshold_name(ERROR), log_threshold_name(FATAL), log_threshold_name(LOG_THRESHOLD_DEFAULT),
 
-		layout_name(MONOCLE), layout_name(LEFT), layout_name(RIGHT), layout_name(TOP), layout_name(BOTTOM), layout_name(WIDE),
+		layout_name(MONOCLE), layout_name(LEFT), layout_name(RIGHT), layout_name(TOP), layout_name(BOTTOM), layout_name(WIDE), layout_name(SPLIT_SCROLL),
 		stack_name(EVEN), stack_name(DIMINISH), stack_name(DWINDLE),
 		COUNT_MIN,
 		RATIO_MIN, RATIO_MAX);
@@ -76,7 +84,7 @@ void usage(const int status) {
 
 void usage_defaults(void) {
 	fprintf(stdout,
-			"wideriver \\\n"
+			"flooded \\\n"
 			"    --layout                       %s        \\\n"
 			"    --layout-alt                   %s     \\\n"
 			"    --stack                        %s     \\\n"
@@ -94,7 +102,7 @@ void usage_defaults(void) {
 			"    --border-color-focused-monocle \"%s\"  \\\n"
 			"    --border-color-unfocused       \"%s\"  \\\n"
 			"    --log-threshold                %s        \\\n"
-			"   > \"/tmp/wideriver.${XDG_VTNR}.${USER}.log\" 2>&1 &\n",
+			"   > \"/tmp/flooded.${XDG_VTNR}.${USER}.log\" 2>&1 &\n",
 		layout_name(LAYOUT_DEFAULT), layout_name(LAYOUT_ALT_DEFAULT), stack_name(STACK_DEFAULT),
 		COUNT_MASTER_DEFAULT, RATIO_MASTER_DEFAULT,
 		COUNT_WIDE_LEFT_DEFAULT, RATIO_WIDE_DEFAULT,

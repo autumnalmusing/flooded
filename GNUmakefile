@@ -12,7 +12,7 @@ PRO_H = $(PRO_X:.xml=.h)
 PRO_C = $(PRO_X:.xml=.c)
 PRO_O = $(PRO_X:.xml=.o)
 
-LIB_H = $(wildcard lib/col/inc/*.h)
+LIB_H = $(wildcard lib/col/inc/*.h)flooded
 LIB_C = $(wildcard lib/col/src/*.c)
 LIB_O = $(LIB_C:.c=.o)
 
@@ -25,13 +25,13 @@ TST_T = $(patsubst tst%,test%,$(TST_E))
 #
 # build
 #
-all: wideriver
+all: flooded
 
 $(SRC_O): $(SRC_H) $(PRO_H)
 $(PRO_O): $(PRO_H)
 $(LIB_O): $(LIB_H)
 
-wideriver: $(SRC_O) $(PRO_O) $(LIB_O)
+flooded: $(SRC_O) $(PRO_O) $(LIB_O)
 	$(CC) -o $(@) $(^) $(LDFLAGS) $(LDLIBS)
 	@test -x ../deploy.sh && ../deploy.sh || true
 
@@ -42,27 +42,27 @@ $(PRO_C): $(PRO_X)
 	wayland-scanner private-code $(@:.c=.xml) $@
 
 clean:
-	rm -f wideriver $(SRC_O) $(PRO_O) $(PRO_H) $(PRO_C) $(LIB_O) $(TST_O) $(TST_E)
+	rm -f flooded $(SRC_O) $(PRO_O) $(PRO_H) $(PRO_C) $(LIB_O) $(TST_O) $(TST_E)
 
 #
 # install
 #
-install: wideriver man/wideriver.1
+install: flooded man/flooded.1
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f wideriver $(DESTDIR)$(PREFIX)/bin
-	chmod 755 $(DESTDIR)$(PREFIX)/bin/wideriver
+	cp -f flooded $(DESTDIR)$(PREFIX)/bin
+	chmod 755 $(DESTDIR)$(PREFIX)/bin/flooded
 	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1
-	cp -f man/wideriver.1 $(DESTDIR)$(PREFIX)/share/man/man1
-	chmod 644 $(DESTDIR)$(PREFIX)/share/man/man1/wideriver.1
+	cp -f man/flooded.1 $(DESTDIR)$(PREFIX)/share/man/man1
+	chmod 644 $(DESTDIR)$(PREFIX)/share/man/man1/flooded.1
 
 uninstall:
-	rm -f $(DESTDIR)$(PREFIX)/bin/wideriver
-	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/wideriver.1
+	rm -f $(DESTDIR)$(PREFIX)/bin/flooded
+	rm -f $(DESTDIR)$(PREFIX)/share/man/man1/flooded.1
 
 #
 # doc
 #
-doc: wideriver
+doc: flooded
 	$(MAKE) -f doc/GNUmakefile
 
 #

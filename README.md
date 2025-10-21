@@ -1,6 +1,6 @@
-# wideriver
+# flooded
 
-Tiling window manager for the [river](https://github.com/riverwm/river) wayland compositor, inspired by [dwm](https://dwm.suckless.org/) and [xmonad](https://xmonad.org/)
+Fork of the [wideriver](https://github.com/alex-courtis/wideriver) tiling window manager for the [river](https://github.com/riverwm/river) wayland compositor. Adds a "split_scroll" layout that supports multiple independantly "scrollable" columns. 
 
 - Per-tag state
 - Master/stack(s) left, right and wide layouts
@@ -88,10 +88,10 @@ Log file is strongly recommended.
 
 ``` sh
 # set layout manager
-riverctl default-layout wideriver
+riverctl default-layout flooded
 
 # start layout manager
-wideriver \
+flooded \
     --layout                       left        \
     --layout-alt                   monocle     \
     --stack                        dwindle     \
@@ -109,7 +109,7 @@ wideriver \
     --border-color-focused-monocle "0x586e75"  \
     --border-color-unfocused       "0x586e75"  \
     --log-threshold                info        \
-   > "/tmp/wideriver.${XDG_VTNR}.${USER}.log" 2>&1 &
+   > "/tmp/flooded.${XDG_VTNR}.${USER}.log" 2>&1 &
 ```
 
 </details>
@@ -122,24 +122,24 @@ Create some command mappings e.g.
 </summary>
 
 ``` sh
-riverctl map normal $mod1 up    send-layout-cmd wideriver "--layout monocle"
-riverctl map normal $mod1 down  send-layout-cmd wideriver "--layout wide"
-riverctl map normal $mod1 left  send-layout-cmd wideriver "--layout left"
-riverctl map normal $mod1 right send-layout-cmd wideriver "--layout right"
+riverctl map normal $mod1 up    send-layout-cmd flooded "--layout monocle"
+riverctl map normal $mod1 down  send-layout-cmd flooded "--layout wide"
+riverctl map normal $mod1 left  send-layout-cmd flooded "--layout left"
+riverctl map normal $mod1 right send-layout-cmd flooded "--layout right"
 
-riverctl map normal $mod1 Space send-layout-cmd wideriver "--layout-toggle"
+riverctl map normal $mod1 Space send-layout-cmd flooded "--layout-toggle"
 
-riverctl map normal $mod1 plus  send-layout-cmd wideriver "--ratio +0.025"
-riverctl map normal $mod1 equal send-layout-cmd wideriver "--ratio 0.35"
-riverctl map normal $mod1 minus send-layout-cmd wideriver "--ratio -0.025"
+riverctl map normal $mod1 plus  send-layout-cmd flooded "--ratio +0.025"
+riverctl map normal $mod1 equal send-layout-cmd flooded "--ratio 0.35"
+riverctl map normal $mod1 minus send-layout-cmd flooded "--ratio -0.025"
 
-riverctl map normal $mod2 plus  send-layout-cmd wideriver "--count +1"
-riverctl map normal $mod2 equal send-layout-cmd wideriver "--count 1"
-riverctl map normal $mod2 minus send-layout-cmd wideriver "--count -1"
+riverctl map normal $mod2 plus  send-layout-cmd flooded "--count +1"
+riverctl map normal $mod2 equal send-layout-cmd flooded "--count 1"
+riverctl map normal $mod2 minus send-layout-cmd flooded "--count -1"
 
-riverctl map normal $mod2 e     send-layout-cmd wideriver "--stack even"
-riverctl map normal $mod2 w     send-layout-cmd wideriver "--stack dwindle"
-riverctl map normal $mod2 i     send-layout-cmd wideriver "--stack diminish"
+riverctl map normal $mod2 e     send-layout-cmd flooded "--stack even"
+riverctl map normal $mod2 w     send-layout-cmd flooded "--stack dwindle"
+riverctl map normal $mod2 i     send-layout-cmd flooded "--stack diminish"
 ```
 
 </details>
@@ -148,7 +148,7 @@ riverctl map normal $mod2 i     send-layout-cmd wideriver "--stack diminish"
 
 ### Left, Dwindle
 
-`riverctl send-layout-cmd wideriver "--layout left --stack dwindle --count 1 --ratio 0.5"`
+`riverctl send-layout-cmd flooded "--layout left --stack dwindle --count 1 --ratio 0.5"`
 
               Master                          Stack
     ____________________________________________________________
@@ -169,11 +169,11 @@ The master area occupies half of the available space and contains one view.
 
 The stack is filled in a diminishing manner in a downward then rightward directions.
 
-2 may be moved into the master area with `riverctl send-layout-cmd wideriver "--count +1"` and will be evenly placed below 1.
+2 may be moved into the master area with `riverctl send-layout-cmd flooded "--count +1"` and will be evenly placed below 1.
 
 ### Right, Even
 
-`riverctl send-layout-cmd wideriver "--layout right --stack even --count 2 --ratio 0.55"`
+`riverctl send-layout-cmd flooded "--layout right --stack even --count 2 --ratio 0.55"`
 
                 Stack                       Master              
     ____________________________________________________________
@@ -196,7 +196,7 @@ The stack is split evenly and is filled in a downwards direction.
 
 ### Wide, Diminish
 
-`riverctl send-layout-cmd wideriver "--layout wide --stack diminish --count 3 --ratio 0.4"`
+`riverctl send-layout-cmd flooded "--layout wide --stack diminish --count 3 --ratio 0.4"`
 
               Left Stack               Master                     Right Stack           
     ________________________________________________________________________________
@@ -219,11 +219,11 @@ The left stack contains 3 views, the right stack the remainder.
 
 The left and right stacks each occupy 30% of the available width.
 
-5 may be moved into the master area with `riverctl send-layout-cmd wideriver "--count +1"`. 4 will be placed at the “top” of the stack, below 3.
+5 may be moved into the master area with `riverctl send-layout-cmd flooded "--count +1"`. 4 will be placed at the “top” of the stack, below 3.
 
 ### Monocle
 
-`riverctl send-layout-cmd wideriver "--layout monocle"`
+`riverctl send-layout-cmd flooded "--layout monocle"`
 
     ____________________________________________________________
     |                                                          |
@@ -345,17 +345,17 @@ Gaps, in pixels, between windows may be injected. They are off by default.
 
 ### Package Manager
 
-[![Packaging status](https://repology.org/badge/vertical-allrepos/wideriver.svg)](https://repology.org/project/wideriver/versions)
+[![Packaging status](https://repology.org/badge/vertical-allrepos/flooded.svg)](https://repology.org/project/flooded/versions)
 
 ### From Source
 
-[![CI](https://github.com/alex-courtis/wideriver/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/alex-courtis/wideriver/actions/workflows/ci.yml?query=branch%3Amaster)
+[![CI](https://github.com/alex-courtis/flooded/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/alex-courtis/flooded/actions/workflows/ci.yml?query=branch%3Amaster)
 
 See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ``` sh
-git clone clone git@github.com:alex-courtis/wideriver.git
-cd wideriver
+git clone clone git@github.com:alex-courtis/flooded.git
+cd flooded
 make
 sudo make install
 ```
@@ -364,7 +364,7 @@ Should install under `/usr/local`
 
 ## USAGE
 
-    Usage: wideriver [OPTIONS...|COMMANDS...]
+    Usage: flooded [OPTIONS...|COMMANDS...]
 
     OPTIONS, startup:
 
@@ -483,9 +483,9 @@ Increase, decrease or set the master ratio: the proportion of the width or heigh
 
 You can “shuffle” views through master, focusing the new master using:
 
-`riverctl send-layout-cmd wideriver '--count +1' && riverctl focus-view next"`
+`riverctl send-layout-cmd flooded '--count +1' && riverctl focus-view next"`
 
-`riverctl send-layout-cmd wideriver '--count -1' && riverctl focus-view previous"`
+`riverctl send-layout-cmd flooded '--count -1' && riverctl focus-view previous"`
 
 ## FAQ
 
@@ -521,15 +521,15 @@ Workaround: set a river background colour other than default black `0x000000`
 
 ### Problems
 
-Please raise a [Bug Report](https://github.com/alex-courtis/wideriver/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml)
+Please raise a [Bug Report](https://github.com/alex-courtis/flooded/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml)
 
 ### Ideas
 
-Please create a [Feature Request](https://github.com/alex-courtis/wideriver/issues/new?assignees=&labels=feature&projects=&template=feature_request.yml)
+Please create a [Feature Request](https://github.com/alex-courtis/flooded/issues/new?assignees=&labels=feature&projects=&template=feature_request.yml)
 
 ### Questions or Discussions
 
-Please raise an [Issue](https://github.com/alex-courtis/wideriver/issues/new)
+Please raise an [Issue](https://github.com/alex-courtis/flooded/issues/new)
 
 ### Contributions
 

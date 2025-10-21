@@ -1,5 +1,5 @@
 name: Feature Request
-description: Suggest new wideriver functionality
+description: Suggest new flooded functionality
 labels: [feature]
 body:
   - type: textarea
@@ -17,5 +17,5 @@ body:
   - type: textarea
     attributes:
       label: "Ideas"
-      description: "A \"sketch\" of the solution. You could attach an image or draft `wideriver` arguments or `riverctl` commands."
+      description: "A \"sketch\" of the solution. You could attach an image or draft `flooded` arguments or `riverctl` commands."
 

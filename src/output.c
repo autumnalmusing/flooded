@@ -41,7 +41,7 @@ struct Output *output_init(struct wl_output *wl_output,
 		return NULL;
 	}
 
-	struct river_layout_v3 *river_layout = river_layout_manager_v3_get_layout(river_layout_manager, wl_output, "wideriver");
+	struct river_layout_v3 *river_layout = river_layout_manager_v3_get_layout(river_layout_manager, wl_output, "flooded");
 	if (!river_layout) {
 		log_w("Failed to create river layout, ignoring output %d", name);
 		return NULL;
@@ -151,6 +151,10 @@ static void apply_count_ratio(const struct Cmd *cmd, struct Tag *tag) {
 			count = &tag->count_master;
 			ratio = &tag->ratio_master;
 			break;
+		case SPLIT_SCROLL:
+			// For split-scroll, count/ratio commands don't apply
+			// as it uses dynamic columns instead
+			return;
 		case MONOCLE:
 			return;
 	}
@@ -177,6 +181,37 @@ static void apply_count_ratio(const struct Cmd *cmd, struct Tag *tag) {
 	}
 }
 
+static void apply_multi_column(const struct Cmd *cmd, struct Tag *tag) {
+	if (cmd->add_column) {
+		// Add a new column
+		tag->num_columns++;
+		// Reallocate scroll positions array
+		tag->column_scroll_positions = realloc(tag->column_scroll_positions, 
+			tag->num_columns * sizeof(uint32_t));
+		tag->column_scroll_positions[tag->num_columns - 1] = 0;
+		// Move to the new column
+		tag->current_column = tag->num_columns - 1;
+	}
+	
+	// New views are automatically assigned to the current column
+	// This is handled by the layout system when views are added
+	// View navigation within columns is handled by river's built-in commands:
+	// - riverctl focus-view next/previous
+	// - riverctl swap next/previous
+	
+	if (cmd->next_column) {
+		if (tag->num_columns > 0) {
+			tag->current_column = (tag->current_column + 1) % tag->num_columns;
+		}
+	}
+	
+	if (cmd->prev_column) {
+		if (tag->num_columns > 0) {
+			tag->current_column = (tag->current_column - 1 + tag->num_columns) % tag->num_columns;
+		}
+	}
+}
+
 void output_apply_cmd(const struct Output *output, const struct Cmd *cmd) {
 	struct SList *all = tag_all(output->state->tags, output->state->command_tags_mask);
 	for (struct SList *i = all; i; i = i->nex) {
@@ -185,6 +220,7 @@ void output_apply_cmd(const struct Output *output, const struct Cmd *cmd) {
 		apply_layout(cmd, tag);
 		apply_stack(cmd, tag);
 		apply_count_ratio(cmd, tag);
+		apply_multi_column(cmd, tag);
 	}
 	slist_free(&all);
 }

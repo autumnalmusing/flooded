@@ -19,6 +19,10 @@ struct Tag {
 	bool smart_gaps;
 	uint32_t inner_gaps;
 	uint32_t outer_gaps;
+	// Multi-column layout state
+	uint32_t num_columns;
+	uint32_t current_column;
+	uint32_t *column_scroll_positions; // Array of scroll positions for each column
 };
 
 struct Tag *tag_init(const uint32_t mask);

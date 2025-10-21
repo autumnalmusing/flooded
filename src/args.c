@@ -176,7 +176,7 @@ void args_cli(int argc, char **argv) {
 				}
 				break;
 			case 20:
-				fprintf(stdout, "wideriver version %s\n", VERSION);
+				fprintf(stdout, "flooded version %s\n", VERSION);
 				exit(EXIT_SUCCESS);
 				return;
 			default:
@@ -186,7 +186,7 @@ void args_cli(int argc, char **argv) {
 		}
 	}
 
-	log_i("wideriver version %s", VERSION);
+	log_i("flooded version %s", VERSION);
 	log_i("--layout                       %s",  layout_name(cfg->layout));
 	log_i("--layout-alt                   %s",  layout_name(cfg->layout_alt));
 	log_i("--stack                        %s",  stack_name(cfg->stack));
@@ -212,6 +212,9 @@ static struct option cmd_long_options[] = {
 	{ "count",         required_argument, 0, 0, }, // 2
 	{ "ratio",         required_argument, 0, 0, }, // 3
 	{ "stack",         required_argument, 0, 0, }, // 4
+	{ "add-column",    no_argument,       0, 0, }, // 5
+	{ "next-column",   no_argument,       0, 0, }, // 6
+	{ "prev-column",   no_argument,       0, 0, }, // 7
 	{ 0,               0,                 0, 0, }
 };
 
@@ -259,6 +262,15 @@ const struct Cmd *args_cmd(int argc, char **argv) {
 					log_e("invalid --stack '%s'", optarg);
 					goto err;
 				}
+				break;
+			case 5:
+				cmd_set_add_column(cmd);
+				break;
+			case 6:
+				cmd_set_next_column(cmd);
+				break;
+			case 7:
+				cmd_set_prev_column(cmd);
 				break;
 			default:
 				log_e("invalid command");

@@ -1,4 +1,4 @@
-# Contributing to https://github.com/alex-courtis/wideriver
+# Contributing to https://github.com/alex-courtis/flooded
 
 <!-- toc -->
 
@@ -27,7 +27,7 @@ Thank you for contribution!
 
 Ideas, bug fixes and enhancements are always welcome.
 
-Please raise an [issue](https://github.com/alex-courtis/wideriver/issues), fork the repository and raise a [PR](https://github.com/alex-courtis/wideriver/pulls).
+Please raise an [issue](https://github.com/alex-courtis/flooded/issues), fork the repository and raise a [PR](https://github.com/alex-courtis/flooded/pulls).
 
 [ci.yml](.github/workflows/ci.yml) must pass.
 
@@ -174,9 +174,9 @@ It may be installed via `npm install -g markdown-toc` or the AUR package `nodejs
 
 Update the templates and run `make doc`.
 
-Preview the man page via `man -l man/wideriver.1`
+Preview the man page via `man -l man/flooded.1`
 
-Commit `README.md` and `man/wideriver.1`
+Commit `README.md` and `man/flooded.1`
 
 ## Style
 

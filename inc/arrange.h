@@ -47,6 +47,14 @@ void arrange_wide(const struct Demand *demand,
 		struct Box *master,
 		struct Box *after);
 
+// calculate SPLIT_SCROLL left/right areas for Tag
+void arrange_split_scroll(const struct Demand *demand,
+		const struct Tag* const tag,
+		const uint32_t num_left,
+		const uint32_t num_right,
+		struct Box *left,
+		struct Box *right);
+
 // append many new Box to views with full usable area
 void arrange_monocle(const struct Demand *demand,
 		const struct Tag* const tag,

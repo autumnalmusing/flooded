@@ -49,6 +49,9 @@ static const char *description_info(const struct Demand* const demand, const str
 				snprintf(desc, sizeof(desc), "├─┤ ├─┤");
 			}
 			break;
+		case SPLIT_SCROLL:
+			snprintf(desc, sizeof(desc), "│││││");
+			break;
 	}
 
 	return desc;
@@ -68,6 +71,9 @@ static const char *description_debug(const struct Demand* const demand, const st
 			snprintf(desc, sizeof(desc), "%s %u %g ", description_info(demand, tag), tag->count_wide_left, tag->ratio_wide);
 			break;
 		case MONOCLE:
+			snprintf(desc, sizeof(desc), "%s", description_info(demand, tag));
+			break;
+		case SPLIT_SCROLL:
 			snprintf(desc, sizeof(desc), "%s", description_info(demand, tag));
 			break;
 	}
@@ -127,6 +133,9 @@ struct SList *layout(const struct Demand *demand, const struct Tag *tag) {
 		case WIDE:
 			arrange_wide(demand, tag, num_before, num_master, num_after, &box_before, &box_master, &box_after);
 			break;
+		case SPLIT_SCROLL:
+			arrange_split_scroll(demand, tag, num_before, num_after, &box_before, &box_after);
+			break;
 	}
 
 	log_d_c_s("  layout"); log_d_c_e("%s", layout_name(tag->layout_cur));
@@ -176,6 +185,13 @@ struct SList *layout(const struct Demand *demand, const struct Tag *tag) {
 
 			// right stack dwindle right down
 			arrange_views(demand, tag->stack, S, E, num_after, num_after, tag->inner_gaps, box_after, box_after, &views);
+			break;
+		case SPLIT_SCROLL:
+			// left half: arrange views vertically (top to bottom)
+			arrange_views(demand, tag->stack, S, S, num_before, num_before, tag->inner_gaps, box_before, box_before, &views);
+			
+			// right half: arrange views vertically (top to bottom)
+			arrange_views(demand, tag->stack, S, S, num_after, num_after, tag->inner_gaps, box_after, box_after, &views);
 			break;
 	}
 

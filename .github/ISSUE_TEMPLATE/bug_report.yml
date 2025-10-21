@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a problem with wideriver
+description: Report a problem with flooded
 labels: [bug]
 body:
   - type: textarea
@@ -16,14 +16,14 @@ body:
       required: true
   - type: input
     attributes:
-      label: "wideriver version"
-      description: "Output of `wideriver --version`"
+      label: "flooded version"
+      description: "Output of `flooded --version`"
     validations:
       required: true
   - type: textarea
     attributes:
       label: "Logs"
-      description: "Logs showing at minimum the startup arguments. Likely at `/tmp/wideriver.${XDG_VTNR}.${USER}.log`"
+      description: "Logs showing at minimum the startup arguments. Likely at `/tmp/flooded.${XDG_VTNR}.${USER}.log`"
       render: text
     validations:
       required: true

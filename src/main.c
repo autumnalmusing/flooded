@@ -116,11 +116,11 @@ int main(int argc, char **argv) {
 		goto done;
 	}
 
-	log_i("wideriver started");
+	log_i("flooded started");
 
 	rc = loop();
 
-	log_i("wideriver done %d", rc);
+	log_i("flooded done %d", rc);
 
 done:
 	displ_destroy();

@@ -14,6 +14,10 @@ struct Cmd {
 	int32_t *count_delta;
 	double *ratio;
 	double *ratio_delta;
+	// Multi-column layout commands
+	bool add_column;
+	bool next_column;
+	bool prev_column;
 };
 
 // instantiate cmd from river command args, NULL on any failure
@@ -27,5 +31,9 @@ bool cmd_set_layout_toggle(struct Cmd *cmd);
 bool cmd_set_stack(struct Cmd *cmd, const char *s);
 bool cmd_set_count(struct Cmd *cmd, const char *s);
 bool cmd_set_ratio(struct Cmd *cmd, const char *s);
+// Multi-column layout commands
+bool cmd_set_add_column(struct Cmd *cmd);
+bool cmd_set_next_column(struct Cmd *cmd);
+bool cmd_set_prev_column(struct Cmd *cmd);
 
 #endif // CMD_H

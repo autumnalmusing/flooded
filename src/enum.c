@@ -15,6 +15,7 @@ static struct NameVal layouts[] = {
 	{ .val = TOP,		.name = "top",		},
 	{ .val = BOTTOM,	.name = "bottom",	},
 	{ .val = WIDE,		.name = "wide",		},
+	{ .val = SPLIT_SCROLL,	.name = "split-scroll",	},
 	{ .val = 0,			.name = NULL,		},
 };
 

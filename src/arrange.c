@@ -61,6 +61,19 @@ void arrange_count(const uint32_t view_count,
 			}
 
 			break;
+		case SPLIT_SCROLL:
+			if (view_count == 0) {
+				// nop, bad
+				break;
+			}
+			
+			// For multi-column layout, we need to track which views belong to which columns
+			// This is a simplified version - in practice, we'd need to track view-to-column mapping
+			// For now, distribute views evenly across columns
+			*before = view_count / tag->num_columns;
+			*after = view_count - *before;
+			*master = 0; // No master area for this layout
+			break;
 	}
 }
 
@@ -283,6 +296,59 @@ void arrange_wide(const struct Demand *demand,
 	after->height = demand->usable_height - 2 * outer_gap;
 	after->x = master->x + master->width + inner_gap;
 	after->y = outer_gap;
+}
+
+void arrange_split_scroll(const struct Demand *demand,
+		const struct Tag* const tag,
+		const uint32_t num_left,
+		const uint32_t num_right,
+		struct Box *left,
+		struct Box *right) {
+
+	if (!demand || !tag || !left || !right)
+		return;
+
+	memset(left, 0, sizeof(struct Box));
+	memset(right, 0, sizeof(struct Box));
+
+	uint32_t inner_gap = tag->inner_gaps;
+	uint32_t outer_gap = tag->outer_gaps;
+
+	if (demand->view_count == 1 && tag->smart_gaps) {
+		inner_gap = 0;
+		outer_gap = 0;
+	}
+
+	// Handle edge cases
+	if (num_left == 0 && num_right == 0) {
+		return;
+	}
+	if (num_left == 0) {
+		right->width = demand->usable_width - 2 * outer_gap;
+		right->height = demand->usable_height - 2 * outer_gap;
+		right->x = outer_gap;
+		right->y = outer_gap;
+		return;
+	}
+	if (num_right == 0) {
+		left->width = demand->usable_width - 2 * outer_gap;
+		left->height = demand->usable_height - 2 * outer_gap;
+		left->x = outer_gap;
+		left->y = outer_gap;
+		return;
+	}
+
+	// Split screen horizontally into multiple columns
+	// For now, just split into two halves - this would be extended for multiple columns
+	left->width = (demand->usable_width - 2 * outer_gap - inner_gap) / 2.0f + 0.5f;
+	left->height = demand->usable_height - 2 * outer_gap;
+	left->x = outer_gap;
+	left->y = outer_gap;
+
+	right->width = demand->usable_width - left->width - 2 * outer_gap - inner_gap;
+	right->height = demand->usable_height - 2 * outer_gap;
+	right->x = outer_gap + left->width + inner_gap;
+	right->y = outer_gap;
 }
 
 void arrange_monocle(const struct Demand *demand,

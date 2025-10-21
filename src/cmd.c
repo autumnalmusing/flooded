@@ -117,3 +117,19 @@ bool cmd_set_stack(struct Cmd *cmd, const char *s) {
 	}
 	return false;
 }
+
+// Multi-column layout commands
+bool cmd_set_add_column(struct Cmd *cmd) {
+	cmd->add_column = true;
+	return true;
+}
+
+bool cmd_set_next_column(struct Cmd *cmd) {
+	cmd->next_column = true;
+	return true;
+}
+
+bool cmd_set_prev_column(struct Cmd *cmd) {
+	cmd->prev_column = true;
+	return true;
+}

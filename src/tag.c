@@ -23,6 +23,11 @@ struct Tag *tag_init(const uint32_t mask) {
 	tag->inner_gaps = cfg->inner_gaps;
 	tag->outer_gaps = cfg->outer_gaps;
 
+	// Initialize multi-column layout state
+	tag->num_columns = 1; // Start with 1 column
+	tag->current_column = 0;
+	tag->column_scroll_positions = calloc(1, sizeof(uint32_t)); // Initialize with 1 column
+
 	tag->mask = mask;
 
 	return tag;
@@ -43,7 +48,9 @@ void tag_destroy(const void *t) {
 	if (!t)
 		return;
 
-	free((struct Tag*)t);
+	struct Tag *tag = (struct Tag*)t;
+	free(tag->column_scroll_positions);
+	free(tag);
 }
 
 void tags_destroy(const struct SList *tags) {
