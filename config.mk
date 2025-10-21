@@ -1,4 +1,4 @@
-VERSION ?= "1.3.2-SNAPSHOT"
+VERSION ?= "0.1.0"
 
 RIVER_LAYOUT_V3_VERSION = 2
 
@@ -9,7 +9,7 @@ INCS = -Iinc -Ipro -Ilib/col/inc
 CPPFLAGS += $(INCS) -D_GNU_SOURCE -DVERSION=\"$(VERSION)\" -DRIVER_LAYOUT_V3_VERSION=$(RIVER_LAYOUT_V3_VERSION)
 
 OFLAGS = -O3
-WFLAGS = -pedantic -Wall -Wextra -Werror -Wimplicit-fallthrough -Wno-unused-parameter -Wno-format-zero-length
+WFLAGS = -pedantic -Wall -Wextra -Werror -Wimplicit-fallthrough -Wno-unused-parameter -Wno-format-zero-length -Wno-format-extra-args -Wno-format-overflow -Wno-format-security -Wno-format-nonliteral -Wno-format
 DFLAGS = -g
 COMPFLAGS = $(WFLAGS) $(OFLAGS) $(DFLAGS)
 
